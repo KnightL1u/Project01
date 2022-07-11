@@ -1,0 +1,91 @@
+spring:
+  #静态资源处理
+  resources:
+    #启动静态资源处理
+    add-mappings: true
+    cache:
+      cachecontrol:
+        #缓存相应时间  second
+        max-age: 3600
+
+    chain:
+      #资源链启动缓存
+      cache: true
+      #启动资源链
+      enabled: true
+      #压缩资源
+      compressed: true
+      #h5的应用缓存
+      html-application-cache: true
+    static-locations: classpath:/static/
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.163.56:3306/project01?useUnicode=true&characterEncoding=utf-8&userSSL=false
+    username: root
+    password: 123456
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 1800000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  redis:
+    #服务器地址
+    host: 192.168.163.56
+    #端口
+    port: 6379
+    #默认数据库   一共有16个
+    database: 0
+    #连接超时时间
+    connect-timeout: 10000
+    #连接池
+    lettuce:
+      pool:
+        #最大连接数  默认8
+        max-active: 8
+        #最大等待时间  默认-1
+        max-wait: 10000
+        #最大空闲连接
+        max-idle: 200
+        #最小空闲连接
+        min-idle: 5
+  rabbitmq:
+    host: 192.168.163.56
+    port: 5672
+    username: root
+    password: 123456
+    virtual-host: /
+    listener:
+      simple:
+        #消费者最小数量
+        concurrency: 10
+        #消费者最大数量
+        max-concurrency: 10
+        #限制消费者  每次只处理一条消息
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms
+        max-attempts: 3
+        max-interval: 10000ms
+        multiplier: 1
+
+
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.liu.project01.pojo
+
+logging:
+  level:
+    com.liu.project01.mapper: debug

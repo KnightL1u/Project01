@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.project01.mapper.GoodsMapper">
+
+
+    <select id="findGoodsVo" resultType="com.liu.project01.vo.GoodsVo">
+
+        SELECT g.*,
+               sg.seckill_price,
+               sg.stock_count,
+               sg.start_date,
+               sg.end_date
+        FROM t_goods g
+                 LEFT JOIN t_seckill_goods sg ON g.id = sg.goods_id
+    </select>
+    <select id="findGoodsVoByGoodsId" resultType="com.liu.project01.vo.GoodsVo">
+        SELECT g.*,
+               sg.seckill_price,
+               sg.stock_count,
+               sg.start_date,
+               sg.end_date
+        FROM t_goods g
+                 LEFT JOIN t_seckill_goods sg ON g.id = sg.goods_id
+        where g.id=#{goodsId}
+    </select>
+</mapper>
